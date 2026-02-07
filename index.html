@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Great+Vibes&family=Parisienne&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
     <title>Felicitarea Noastră Romantică ❤️</title>
     <style>
              :root {
@@ -296,6 +299,17 @@ input[type="text"], input[type="file"] {
             </select>
         </div>
 
+        <div class="input-group">
+            <label>Font pentru felicitare:</label>
+            <select id="font-select" onchange="changeFont()">
+                <option value="'Dancing Script', cursive">Dancing Script</option>
+                <option value="'Great Vibes', cursive">Great Vibes</option>
+                <option value="'Parisienne', cursive">Parisienne</option>
+                <option value="'Poppins', sans-serif">Modern</option>
+            </select>
+        </div>
+
+
 
     </div>
 
@@ -414,11 +428,18 @@ input[type="text"], input[type="file"] {
         }
     </script>
 
-     <script>
+    <script>
             function changeTheme() {
             const theme = document.getElementById("theme-select").value;
             document.body.className = "theme-" + theme;
         }
+    </script>
+
+    <script>
+            function changeFont() {
+        const font = document.getElementById("font-select").value;
+        document.getElementById("printable-card").style.fontFamily = font;
+    }
     </script>
 
 
