@@ -14,6 +14,18 @@
             --text-light: #EAEAEA;   /* text */
             --border: #333333;       /* borduri */
         }
+.theme-romantic { --bg: #ffe6ea;
+                 --text: #7a1f2a; 
+                 --accent: #ff4d6d; 
+} 
+.theme-cute { --bg: #fff4fb;
+             --text: #ff69b4;
+             --accent: #ff9ad5; 
+} 
+.theme-elegant { --bg: #f7f3e9;
+                --text: #5a4634; 
+                --accent: #c6a667; 
+}
 
 body {
     background: var(--bg-dark);
@@ -401,6 +413,14 @@ input[type="text"], input[type="file"] {
             document.getElementById("names-line").innerText = him + " ❤️ " + her;
         }
     </script>
+
+     <script>
+            function changeTheme() {
+            const theme = document.getElementById("theme-select").value;
+            document.body.className = "theme-" + theme;
+        }
+    </script>
+
 
 
 
