@@ -452,10 +452,19 @@ input[type="text"], input[type="file"] {
     </script>
 
     <script>
-            function changeFont() {
-        const font = document.getElementById("font-select").value;
-        document.getElementById("printable-card").style.fontFamily = font;
-    }
+          function changeFont() {
+                const font = document.getElementById("font-select").value;
+                const card = document.getElementById("printable-card");
+            
+                card.style.fontFamily = font;
+            
+                if (font.includes("Dancing") || font.includes("Great") || font.includes("Parisienne")) {
+                    card.style.fontSize = "1.3rem";
+                } else {
+                    card.style.fontSize = "1.1rem";
+                }
+            }
+
     </script>
 
 
