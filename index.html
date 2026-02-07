@@ -10,6 +10,9 @@
             --burgundy: #7a1f2a;
             --gold: #d4af37;
             --text-light: #f2f2f2;
+            --accent: #4A90E2;       /* accent */
+            --text-light: #EAEAEA;   /* text */
+            --border: #333333;       /* borduri */
         }
 
 body {
@@ -27,7 +30,7 @@ body {
 h1 {
     font-size: 2.4rem;
     font-weight: 700;
-    color: var(--gold);
+    color: var(--accent);
     margin-bottom: 25px;
     letter-spacing: 1px;
 }
@@ -41,19 +44,19 @@ h1 {
     margin-bottom: 40px;
     max-width: 500px;
     width: 100%;
-    border: 1px solid #333;
+    border: 1px solid var(--border);
 }
 
 
 .input-group label {
     font-weight: 600;
-    color: var(--gold);
+    color: var(--accent);
 }
 
 input[type="text"], input[type="file"] {
     width: 90%;
     padding: 12px;
-    border: 1px solid #444;
+    border: 1px solid var(--border);
     border-radius: 10px;
     background: #111;
     color: var(--text-light);
@@ -70,7 +73,7 @@ input[type="text"], input[type="file"] {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 2px solid var(--burgundy);
+    border: 2px solid var(--accent);
     position: relative;
 }
 
@@ -88,7 +91,7 @@ input[type="text"], input[type="file"] {
     border-radius: 12px;
     overflow: hidden;
     background: #1f1f1f;
-    border: 2px solid var(--burgundy);
+    border: 2px solid var(--border);
 }
 
 .photo-box img {
@@ -102,7 +105,7 @@ input[type="text"], input[type="file"] {
 #card-text {
     margin-top: 30px;
     font-size: 1.3rem;
-    color: var(--gold);
+    color: var(--accent);
     text-align: center;
     font-family: 'Georgia', serif;
     font-style: italic;
@@ -112,7 +115,7 @@ input[type="text"], input[type="file"] {
 /* Buton print */
 .btn-print {
     margin-top: 30px;
-    background: var(--burgundy);
+    background: var(--accent);
     color: white;
     border: none;
     padding: 14px 35px;
@@ -126,14 +129,14 @@ input[type="text"], input[type="file"] {
 
 .btn-print:hover {
     transform: scale(1.07);
-    background: #5c1620;
+    background: #3a7ac0;
 }
 
 /* Print */
 @media print {
     .config-panel, .btn-print, h1 { display: none; }
     body { background: white; padding: 0; }
-    #printable-card { box-shadow: none; border: 2px solid var(--burgundy); }
+    #printable-card { box-shadow: none; border: 2px solid var(--accent); }
 }
 
 
