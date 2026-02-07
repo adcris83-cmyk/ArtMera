@@ -272,7 +272,18 @@ input[type="text"], input[type="file"] {
 
               <!-- Inputul tău original -->
             <input type="text" id="text-input" placeholder="Ex: Te iubesc infinit..." onkeyup="updateText()">
-        </div>       
+        </div> 
+
+        <div class="input-group">
+            <label>Alege tema felicitării:</label>
+            <select id="theme-select" onchange="changeTheme()">
+                <option value="dark">Dark Modern</option>
+                <option value="romantic">Romantic ❤️</option>
+                <option value="cute">Cute 🌸</option>
+                <option value="elegant">Elegant ✨</option>
+            </select>
+        </div>
+
 
     </div>
 
