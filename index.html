@@ -12,9 +12,8 @@
             --bg-dark: #1E1E1E;
             --burgundy: #7a1f2a;
             --gold: #d4af37;
-            --text-light: #f2f2f2;
-            --accent: #4A90E2;       /* accent */
-            --text-light: #EAEAEA;   /* text */
+            --text-light: #EAEAEA;
+            --accent: #4A90E2;
             --border: #333333;       /* borduri */
         }
 .theme-romantic { --bg: #ffe6ea;
@@ -77,10 +76,27 @@ input[type="text"], input[type="file"] {
     color: var(--text-light);
 }
 
+select {
+    width: 90%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #111 !important;
+    color: var(--text-light) !important;
+    cursor: pointer;
+    appearance: none;
+}
+
+select option { 
+    background: #111; 
+    color: var(--text-light); 
+}
+
+
 /* Wrapper pentru icon + select */
 .select-wrapper {
     position: relative;
-    width: 90%;
+    width: 100%;
     background: transparent;
 }
 
@@ -97,7 +113,7 @@ input[type="text"], input[type="file"] {
 
 /* Select modern */
 #auto-messages {
-    width: 90%;
+    width: 100%;
     padding: 12px 14px 12px 42px; /* spațiu pentru icon */
     border-radius: 12px;
     border: 1px solid var(--border);
@@ -460,8 +476,10 @@ input[type="text"], input[type="file"] {
             
                 if (font.includes("Dancing") || font.includes("Great") || font.includes("Parisienne")) {
                     card.style.fontSize = "1.3rem";
+                    text.style.lineHeight = "1.4";
                 } else {
                     card.style.fontSize = "1.1rem";
+                    text.style.lineHeight = "1.35";
                 }
             }
 
