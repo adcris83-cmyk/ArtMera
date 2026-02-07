@@ -96,7 +96,9 @@ input[type="text"], input[type="file"] {
 /* Hover */
 #auto-messages:hover {
     border-color: var(--accent);
-    background: linear-gradient(135deg, #151515, #222);
+   
+    background: #111 !important; 
+    color: var(--text-light) !important;
 }
 
 /* Focus */
@@ -158,6 +160,32 @@ input[type="text"], input[type="file"] {
     line-height: 1.4;
 }
 
+        #branding {
+    margin-top: auto;
+    text-align: center;
+    font-size: 0.75rem;
+    opacity: 0.8;
+    padding-top: 15px;
+}
+
+#branding a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+#branding a:hover {
+    text-decoration: underline;
+}
+
+.brand-logo {
+    margin-top: 4px;
+    color: var(--text-light);
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
+
+
 /* Buton print */
 .btn-print {
     margin-top: 30px;
@@ -177,6 +205,8 @@ input[type="text"], input[type="file"] {
     transform: scale(1.07);
     background: #3a7ac0;
 }
+
+        
 
 /* Print */
 @media print {
@@ -260,6 +290,14 @@ input[type="text"], input[type="file"] {
         <div id="card-text">Scrie ceva frumos mai sus...</div>
 
         <div class="hearts-bg">❤︎ ❤︎ ❤︎</div>
+
+        <div id="branding">
+           <a href="https://artmera.wordpress.com/" target="_blank" rel="noopener noreferrer external">
+                https://artmera.wordpress.com/
+            </a>
+        <div class="brand-logo">Sculptează-ți lumea cu <strong>artMera</strong></div>
+</div>
+
     </div>
 
   
