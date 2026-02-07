@@ -62,6 +62,51 @@ input[type="text"], input[type="file"] {
     color: var(--text-light);
 }
 
+/* Wrapper pentru icon + select */
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Icon inimă ❤️ */
+.select-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    pointer-events: none;
+    color: var(--accent);
+}
+
+/* Select modern */
+#auto-messages {
+    width: 100%;
+    padding: 12px 14px 12px 42px; /* spațiu pentru icon */
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, #111, #1b1b1b);
+    color: var(--text-light);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.25s ease;
+    appearance: none;
+}
+
+/* Hover */
+#auto-messages:hover {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, #151515, #222);
+}
+
+/* Focus */
+#auto-messages:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(74,144,226,0.5);
+}
+
+
 /* Felicitare */
 #printable-card {
     width: 380px;
@@ -150,38 +195,61 @@ input[type="text"], input[type="file"] {
         <div class="input-group">
             <label>Poza Lui:</label>
             <input type="file" id="upload-him" accept="image/*" onchange="preview(this, 'img-him')">
-        </div>
+        </div>       
+
         <div class="input-group">
+            <label>Numele lui:</label>
+            <input type="text" id="name-him" placeholder="Ex: Andrei" onkeyup="updateNames()">
+        </div>
+
+         <div class="input-group">
             <label>Poza Ei:</label>
             <input type="file" id="upload-her" accept="image/*" onchange="preview(this, 'img-her')">
         </div>
+        
+        <div class="input-group">
+            <label>Numele ei:</label>
+            <input type="text" id="name-her" placeholder="Ex: Ioana" onkeyup="updateNames()">
+        </div>
 
         <div class="input-group">
-            <label>Mesajul tău special:</label>
+            <label>Alege un mesaj romantic:</label>
         
-            <!-- Select cu 10 mesaje generate -->
-            <select id="auto-messages" onchange="setAutoMessage()">
-                <option value="">— Alege un mesaj —</option>
-                <option value="Te iubesc mai mult decât pot spune în cuvinte.">Te iubesc mai mult decât pot spune în cuvinte.</option>
-                <option value="Lângă tine, fiecare zi devine specială.">Lângă tine, fiecare zi devine specială.</option>
-                <option value="Ești motivul pentru care zâmbesc în fiecare dimineață.">Ești motivul pentru care zâmbesc în fiecare dimineață.</option>
-                <option value="Inima mea te-a ales pe tine și nu greșește niciodată.">Inima mea te-a ales pe tine și nu greșește niciodată.</option>
-                <option value="Cu tine, iubirea are sens și direcție.">Cu tine, iubirea are sens și direcție.</option>
-                <option value="Ești persoana mea preferată din tot universul.">Ești persoana mea preferată din tot universul.</option>
-                <option value="Îți mulțumesc că exiști și că ești a mea.">Îți mulțumesc că exiști și că ești a mea.</option>
-                <option value="Lângă tine mă simt acasă, oriunde am fi.">Lângă tine mă simt acasă, oriunde am fi.</option>
-                <option value="Dragostea ta îmi face sufletul mai bun.">Dragostea ta îmi face sufletul mai bun.</option>
-                <option value="Tu ești începutul și sfârșitul fiecărei dorințe din inima mea.">Tu ești începutul și sfârșitul fiecărei dorințe din inima mea.</option>
-            </select>
+            <div class="select-wrapper">
+                <span class="select-icon">❤️</span>
         
-            <!-- Inputul tău original -->
+                <select id="auto-messages" onchange="setAutoMessage()">
+                    <option value="">— Alege un mesaj —</option>
+                    <option value="Te iubesc mai mult decât pot spune în cuvinte.">Te iubesc mai mult decât pot spune în cuvinte.</option>
+                    <option value="Lângă tine, fiecare zi devine specială.">Lângă tine, fiecare zi devine specială.</option>
+                    <option value="Ești motivul pentru care zâmbesc în fiecare dimineață.">Ești motivul pentru care zâmbesc în fiecare dimineață.</option>
+                    <option value="Inima mea te-a ales pe tine și nu greșește niciodată.">Inima mea te-a ales pe tine și nu greșește niciodată.</option>
+                    <option value="Cu tine, iubirea are sens și direcție.">Cu tine, iubirea are sens și direcție.</option>
+                    <option value="Ești persoana mea preferată din tot universul.">Ești persoana mea preferată din tot universul.</option>
+                    <option value="Îți mulțumesc că exiști și că ești a mea.">Îți mulțumesc că exiști și că ești a mea.</option>
+                    <option value="Lângă tine mă simt acasă, oriunde am fi.">Lângă tine mă simt acasă, oriunde am fi.</option>
+                    <option value="Dragostea ta îmi face sufletul mai bun.">Dragostea ta îmi face sufletul mai bun.</option>
+                    <option value="Tu ești începutul și sfârșitul fiecărei dorințe din inima mea.">Tu ești începutul și sfârșitul fiecărei dorințe din inima mea.</option>
+                </select>
+            </div>
+
+              <!-- Inputul tău original -->
             <input type="text" id="text-input" placeholder="Ex: Te iubesc infinit..." onkeyup="updateText()">
-        </div>
+        </div>       
 
     </div>
 
     <div id="printable-card">
         <div style="font-size: 1.2rem; font-weight: bold; color: var(--pink);">Suntem noi...</div>
+
+        <div id="names-line" style="margin-top:10px; font-size:1.1rem; color:var(--accent);">
+            Numele lui & Numele ei
+        </div>
+        
+        <div id="date-line" style="margin-top:5px; font-size:0.9rem; color:var(--text-light); opacity:0.8;">
+            16 februarie 2026 – Ziua Îndrăgostiților
+        </div>
+
         
         <div class="photo-container">
             <div class="photo-box"><img id="img-him"></div>
@@ -266,6 +334,15 @@ input[type="text"], input[type="file"] {
                 input.value = msg;
                 updateText(); // actualizează textul de pe felicitare
             }
+        }
+    </script>
+
+    <script>
+            function updateNames() {
+            const him = document.getElementById("name-him").value || "Numele lui";
+            const her = document.getElementById("name-her").value || "Numele ei";
+        
+            document.getElementById("names-line").innerText = him + " ❤️ " + her;
         }
     </script>
 
