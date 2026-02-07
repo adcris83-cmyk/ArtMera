@@ -44,13 +44,14 @@ h1 {
     border: 1px solid #333;
 }
 
+
 .input-group label {
     font-weight: 600;
     color: var(--gold);
 }
 
 input[type="text"], input[type="file"] {
-    width: 100%;
+    width: 900%;
     padding: 12px;
     border: 1px solid #444;
     border-radius: 10px;
@@ -171,6 +172,8 @@ input[type="text"], input[type="file"] {
     </div>
 
     <button class="btn-print" onclick="window.print()">Salvează Felicitarea (PDF/Print)</button>
+    <button class="btn-print" onclick="saveAsImage()">Salvează ca imagine (PNG)</button>
+
 
     <script>
         function preview(input, targetId) {
@@ -191,5 +194,25 @@ input[type="text"], input[type="file"] {
             document.getElementById('card-text').innerText = val || "Scrie ceva frumos mai sus...";
         }
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <!-- Adaugă funcția JS care face captura -->
+    <script>
+            function saveAsImage() {
+                const card = document.getElementById("printable-card");
+            
+                html2canvas(card, {
+                    scale: 2, // calitate bună fără fișier mare
+                    useCORS: true
+                }).then(canvas => {
+                    const link = document.createElement("a");
+                    link.download = "felicitare.png";
+                    link.href = canvas.toDataURL("image/png");
+                    link.click();
+                });
+            }
+            </script>
+
+
 </body>
 </html>
