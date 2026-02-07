@@ -37,6 +37,52 @@ h1 {
     margin-bottom: 25px;
     letter-spacing: 1px;
 }
+        
+/* Secțiunea de titlu + reclamă */
+#site-header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 10px 0;
+}
+
+#site-header h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+/* Text promo elegant */
+.promo-text {
+    font-size: 1rem;
+    color: var(--text-light);
+    opacity: 0.85;
+    margin-bottom: 6px;
+}
+
+/* Link promo */
+.promo-link {
+    display: inline-block;
+    margin-top: 4px;
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.promo-link:hover {
+    text-decoration: underline;
+    opacity: 0.9;
+}
+
+/* Ascundem tot la print */
+@media print {
+    #site-header {
+        display: none !important;
+    }
+}
+
 
 /* Panou configurare */
 .config-panel {
@@ -260,15 +306,18 @@ select option {
 </head>
 <body>
 
-    <div id="site-header">
+   <div id="site-header">
             <h1>💌 Creator de Felicitări – un proiect ArtMera</h1>
+        
             <p class="promo-text">
                 Realizăm la comandă tablouri gravate în lemn, sculpturi CNC și cadouri personalizate.
             </p>
+        
             <a class="promo-link" href="https://artmera.wordpress.com/" target="_blank" rel="noopener noreferrer external">
                 Vizitează ArtMera pentru mai multe creații
             </a>
     </div>
+
 
   
     <div class="config-panel">
