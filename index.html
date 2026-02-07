@@ -155,10 +155,29 @@ input[type="text"], input[type="file"] {
             <label>Poza Ei:</label>
             <input type="file" id="upload-her" accept="image/*" onchange="preview(this, 'img-her')">
         </div>
+
         <div class="input-group">
             <label>Mesajul tău special:</label>
+        
+            <!-- Select cu 10 mesaje generate -->
+            <select id="auto-messages" onchange="setAutoMessage()">
+                <option value="">— Alege un mesaj —</option>
+                <option value="Te iubesc mai mult decât pot spune în cuvinte.">Te iubesc mai mult decât pot spune în cuvinte.</option>
+                <option value="Lângă tine, fiecare zi devine specială.">Lângă tine, fiecare zi devine specială.</option>
+                <option value="Ești motivul pentru care zâmbesc în fiecare dimineață.">Ești motivul pentru care zâmbesc în fiecare dimineață.</option>
+                <option value="Inima mea te-a ales pe tine și nu greșește niciodată.">Inima mea te-a ales pe tine și nu greșește niciodată.</option>
+                <option value="Cu tine, iubirea are sens și direcție.">Cu tine, iubirea are sens și direcție.</option>
+                <option value="Ești persoana mea preferată din tot universul.">Ești persoana mea preferată din tot universul.</option>
+                <option value="Îți mulțumesc că exiști și că ești a mea.">Îți mulțumesc că exiști și că ești a mea.</option>
+                <option value="Lângă tine mă simt acasă, oriunde am fi.">Lângă tine mă simt acasă, oriunde am fi.</option>
+                <option value="Dragostea ta îmi face sufletul mai bun.">Dragostea ta îmi face sufletul mai bun.</option>
+                <option value="Tu ești începutul și sfârșitul fiecărei dorințe din inima mea.">Tu ești începutul și sfârșitul fiecărei dorințe din inima mea.</option>
+            </select>
+        
+            <!-- Inputul tău original -->
             <input type="text" id="text-input" placeholder="Ex: Te iubesc infinit..." onkeyup="updateText()">
         </div>
+
     </div>
 
     <div id="printable-card">
@@ -174,9 +193,9 @@ input[type="text"], input[type="file"] {
         <div class="hearts-bg">❤︎ ❤︎ ❤︎</div>
     </div>
 
-    <button class="btn-print" onclick="window.print()">Salvează Felicitarea (PDF/Print)</button>
+  
     <button class="btn-print" onclick="saveAsImage()">Salvează ca imagine (PNG)</button>
-
+    <button class="btn-print" onclick="if(checkPhotos()) window.print()">Salvează Felicitarea (PDF/Print)</button>
 
     <script>
         function preview(input, targetId) {
@@ -201,20 +220,55 @@ input[type="text"], input[type="file"] {
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <!-- Adaugă funcția JS care face captura -->
     <script>
-            function saveAsImage() {
-                const card = document.getElementById("printable-card");
-            
-                html2canvas(card, {
-                    scale: 2, // calitate bună fără fișier mare
-                    useCORS: true
-                }).then(canvas => {
-                    const link = document.createElement("a");
-                    link.download = "felicitare.png";
-                    link.href = canvas.toDataURL("image/png");
-                    link.click();
-                });
+           function saveAsImage() {
+                        if (!checkPhotos()) return;
+                    
+                        const card = document.getElementById("printable-card");
+                    
+                        html2canvas(card, {
+                            scale: 2,
+                            useCORS: true
+                        }).then(canvas => {
+                            const link = document.createElement("a");
+                            link.download = "felicitare.png";
+                            link.href = canvas.toDataURL("image/png");
+                            link.click();
+                        });
+                    }
+
+    </script>
+
+    <script>
+        function checkPhotos() {
+            const him = document.getElementById("img-him").src;
+            const her = document.getElementById("img-her").src;
+        
+            if (!him || him.length < 10) {
+                alert("⚠️ Te rog încarcă poza pentru EL înainte de a continua.");
+                return false;
             }
-            </script>
+        
+            if (!her || her.length < 10) {
+                alert("⚠️ Te rog încarcă poza pentru EA înainte de a continua.");
+                return false;
+            }
+        
+            return true;
+        }
+    </script>
+
+    <script>
+      function setAutoMessage() {
+            const msg = document.getElementById("auto-messages").value;
+            const input = document.getElementById("text-input");
+        
+            if (msg) {
+                input.value = msg;
+                updateText(); // actualizează textul de pe felicitare
+            }
+        }
+    </script>
+
 
 
 </body>
