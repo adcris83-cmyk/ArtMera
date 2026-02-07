@@ -1,2 +1,0 @@
-# ArtMera
-Sculptura in lemn
