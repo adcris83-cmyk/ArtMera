@@ -1,1 +1,186 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jocul Mărțișorului - Cele 9 Cojoace</title>
+    <style>
+        /* CSS - Stilul jocului */
+        body {
+            background-color: #e0f7fa;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 1.5s ease;
+        }
 
+        .game-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h1 { color: #2c3e50; font-size: 24px; }
+
+        #timer-container {
+            font-weight: bold;
+            color: #d32f2f;
+            margin-bottom: 15px;
+            padding: 8px;
+            border: 2px solid #ffcdd2;
+            display: inline-block;
+            border-radius: 12px;
+            background: #fff;
+        }
+
+        .cojoc-icon {
+            font-size: 100px;
+            margin: 20px 0;
+            display: block;
+        }
+
+        #mesaj-etapa {
+            font-style: italic;
+            height: 50px;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background-color: #b71c1c;
+        }
+
+        .hidden { display: none; }
+
+        .snur {
+            font-size: 30px;
+            letter-spacing: 8px;
+            margin: 20px 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        #martisor-final h2 { color: #e91e63; }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Cursa Primăverii 🌸</h1>
+        
+        <div id="game-ui">
+            <div id="timer-container">Timp: <span id="seconds">0</span>s</div>
+            <p>Baba Dochia mai are <strong id="cojoace-count">9</strong> cojoace.</p>
+            <div id="mesaj-etapa">Apasă butonul pentru a începe urcarea!</div>
+            <div id="cojoc-visual" class="cojoc-icon">🧥</div>
+            <button id="next-btn" onclick="leapaCojoy()">Leapădă un cojoc!</button>
+        </div>
+
+        <div id="martisor-final" class="hidden">
+            <h2>Primăvara a învins!</h2>
+            <div class="snur">⚪🔴⚪🔴⚪🔴</div>
+            <div style="font-size: 50px;">🌷🌷🌷</div>
+            <p id="rezultat-final"></p>
+            <p><strong>Să ai o primăvară plină de bucurii și lumină!</strong></p>
+            <button onclick="restartJoc()" style="background-color: #4caf50;">Joacă din nou 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript - Logica jocului
+        let cojoaceRamase = 9;
+        let secunde = 0;
+        let cronometru;
+        let jocInceput = false;
+
+        const mesaje = [
+            "1. Primul cojoc e jos! Soarele prinde putere.",
+            "2. Al doilea cojoc a căzut. Gheața se topește.",
+            "3. Vântul rece s-a potolit pe munte.",
+            "4. Pârâurile încep să curgă vesel.",
+            "5. Se zăresc primii ghiocei curajoși.",
+            "6. Dochia a mai aruncat o povară!",
+            "7. Păsările încep să cânte în pădure.",
+            "8. Doar un cojoc a mai rămas... aproape gata!",
+            "9. Ultimul cojoc! Dochia s-a prefăcut în stană de piatră."
+        ];
+
+        const iconite = ["🧥", "🧥", "🌬️", "💧", "🌱", "☀️", "🐦", "🌤️", "🗿"];
+
+        function pornesteCronometru() {
+            cronometru = setInterval(() => {
+                secunde++;
+                document.getElementById("seconds").innerText = secunde;
+            }, 1000);
+        }
+
+        function leapaCojoy() {
+            if (!jocInceput) {
+                jocInceput = true;
+                pornesteCronometru();
+            }
+
+            if (cojoaceRamase > 1) {
+                cojoaceRamase--;
+                
+                // Actualizare UI
+                document.getElementById("cojoace-count").innerText = cojoaceRamase;
+                document.getElementById("mesaj-etapa").innerText = mesaje[9 - cojoaceRamase - 1];
+                document.getElementById("cojoc-visual").innerText = iconite[9 - cojoaceRamase];
+                
+                // Schimbăm culoarea de fundal treptat (spre galben/verde)
+                let warmth = (9 - cojoaceRamase) * 15;
+                document.body.style.backgroundColor = `rgb(${224 + warmth}, ${247}, ${250 - warmth})`;
+            } else {
+                // Final
+                clearInterval(cronometru);
+                document.getElementById("game-ui").classList.add("hidden");
+                document.getElementById("martisor-final").classList.remove("hidden");
+                document.getElementById("rezultat-final").innerText = `Ai găsit toate cojoacele în ${secunde} secunde!`;
+                document.body.style.backgroundColor = "#fff9c4";
+            }
+        }
+
+        function restartJoc() {
+            cojoaceRamase = 9;
+            secunde = 0;
+            jocInceput = false;
+            clearInterval(cronometru);
+
+            document.getElementById("cojoace-count").innerText = "9";
+            document.getElementById("seconds").innerText = "0";
+            document.getElementById("mesaj-etapa").innerText = "Apasă butonul pentru a începe urcarea!";
+            document.getElementById("cojoc-visual").innerText = "🧥";
+            document.body.style.backgroundColor = "#e0f7fa";
+
+            document.getElementById("game-ui").classList.remove("hidden");
+            document.getElementById("martisor-final").classList.add("hidden");
+        }
+    </script>
+</body>
+</html>
