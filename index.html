@@ -3,204 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legenda Dochiei - Proba Primăverii</title>
+    <title>Artmera - Legenda celor 9 Cojoace</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        :root {
-            --primary: #d32f2f;
-            --spring: #4caf50;
-            --sky: #e0f7fa;
-        }
+        :root { --art-red: #d62828; --art-dark: #2b2d42; --art-beige: #fdfaf6; --art-grey: #666; }
+        body { font-family: 'Georgia', serif; background-color: var(--art-beige); margin: 0; padding: 20px; display: flex; justify-content: center; min-height: 100vh; }
+        
+        #app { background: white; width: 100%; max-width: 450px; padding: 30px; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; position: relative; }
 
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: var(--sky);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            transition: background 2s ease;
-        }
+        .header-brand { font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: #bbb; margin-bottom: 30px; margin-top: 10px; }
+        .screen { display: none; animation: fadeIn 0.6s ease; }
+        .active { display: block; }
 
-        #game-board {
-            width: 450px;
-            background: white;
-            padding: 30px;
-            border-radius: 25px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
+        h2 { color: var(--art-red); font-style: italic; font-weight: normal; margin-bottom: 25px; line-height: 1.3; }
+        p { color: var(--art-grey); font-size: 0.95rem; line-height: 1.6; }
 
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: #eee;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
+        .btn { background: white; border: 1px solid var(--art-dark); color: var(--art-dark); padding: 14px; margin: 8px 0; width: 100%; cursor: pointer; font-size: 0.95rem; transition: 0.3s; text-align: left; padding-left: 20px; border-radius: 2px; }
+        .btn:hover { background: var(--art-dark); color: white; padding-left: 30px; }
 
-        #progress-fill {
-            width: 0%;
-            height: 100%;
-            background: var(--spring);
-            transition: width 0.5s;
-        }
+        .progress-indicator { font-size: 0.7rem; color: #ccc; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
 
-        .stage-box {
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+        /* Zona Mărțișor Generat */
+        #capture-area { padding: 40px 20px; background: white; border: 1px solid #f9f9f9; }
+        .martisor-container { position: relative; width: 180px; height: 180px; margin: 0 auto 30px; display: flex; align-items: center; justify-content: center; }
+        
+        .snur-frame { position: absolute; width: 100%; height: 100%; border: 4px solid transparent; border-top-color: var(--art-red); border-bottom-color: #eee; border-radius: 50%; animation: rotate 15s linear infinite; }
+        .symbol-display { font-size: 4.5rem; z-index: 2; }
 
-        .interactive-area {
-            margin: 20px 0;
-            padding: 20px;
-            border: 2px dashed #ccc;
-            border-radius: 15px;
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.3s;
-        }
+        .save-btn { background: var(--art-red); color: white; border: none; padding: 16px; width: 100%; cursor: pointer; font-weight: bold; margin-top: 20px; letter-spacing: 1px; }
 
-        .interactive-area:hover { border-color: var(--primary); }
-
-        .big-icon { font-size: 80px; transition: transform 0.3s; }
-
-        .shake { animation: shake 0.5s; }
-        @keyframes shake {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(5deg); }
-            75% { transform: rotate(-5deg); }
-            100% { transform: rotate(0deg); }
-        }
-
-        .hidden { display: none; }
-
-        #final-screen {
-            animation: fadeIn 1s;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .snur-anim {
-            height: 5px;
-            background: repeating-linear-gradient(90deg, #fff, #fff 10px, #ff0000 10px, #ff0000 20px);
-            margin: 20px 0;
-            border-radius: 5px;
-        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<div id="game-board">
-    <div id="ui-top">
-        <h2 id="stage-title">Cojocul 1: Gheața</h2>
-        <div class="progress-bar"><div id="progress-fill"></div></div>
-        <p id="instruction">Apasă repetat pe gheață să o spargi!</p>
+<div id="app">
+    <div class="header-brand">Artmera Studio • Primăvara 2026</div>
+
+    <div id="step-1" class="screen active">
+        <h2>Cele 9 Cojoace ale Dochiei</h2>
+        <p>Legenda spune că Dochia își leapădă cojoacele pe drumul spre vârf. Ești gata să ușurezi povara iernii?</p>
+        <button class="btn" onclick="goTo(2)">Urcă muntele</button>
     </div>
 
-    <div id="stage-content" class="stage-box">
-        <div id="interact" class="interactive-area" onclick="handleAction()">
-            <div id="main-emoji" class="big-icon">🧊</div>
+    <div id="step-2" class="screen">
+        <div class="progress-indicator">Cojoacele 1-3 • Gheața</div>
+        <h2>Primele raze topesc gheața. Ce alegi să lași în urmă?</h2>
+        <button class="btn" onclick="goTo(3)">Grijile care m-au înghețat</button>
+        <button class="btn" onclick="goTo(3)">Liniștea rece a singurătății</button>
+    </div>
+
+    <div id="step-3" class="screen">
+        <div class="progress-indicator">Cojoacele 4-6 • Vântul</div>
+        <h2>Vântul cald aduce miros de pământ reavăn. Ce simți că înflorește?</h2>
+        <button class="btn" onclick="goTo(4)">Speranța unui nou început</button>
+        <button class="btn" onclick="goTo(4)">Curajul de a spune ce simt</button>
+    </div>
+
+    <div id="step-4" class="screen">
+        <div class="progress-indicator">Cojoacele 7-9 • Lumina</div>
+        <h2>Ultimul cojoc a căzut. Ce mărțișor porți la piept?</h2>
+        <button class="btn" onclick="finish('ghiocel')">Puritatea (Ghiocel)</button>
+        <button class="btn" onclick="finish('buburuza')">Bucuria (Buburuză)</button>
+        <button class="btn" onclick="finish('potcoava')">Protecția (Potcoavă)</button>
+    </div>
+
+    <div id="step-final" class="screen">
+        <div id="capture-area">
+            <div style="font-size: 10px; color: var(--art-red); margin-bottom: 10px; letter-spacing: 2px;">MĂRȚIȘOR ARTIZANAL</div>
+            <div class="martisor-container">
+                <div class="snur-frame"></div>
+                <div id="final-symbol" class="symbol-display"></div>
+            </div>
+            <h3 id="res-title" style="color:var(--art-dark); margin-bottom: 10px; font-weight: normal; font-style: italic;"></h3>
+            <p id="res-text" style="font-size: 0.9rem; font-style: italic; padding: 0 20px;"></p>
+            <div style="margin-top: 20px; font-size: 0.7rem; color: #ccc; letter-spacing: 3px;">ARTMERA • 2026</div>
         </div>
-        <p id="counter-label">Clicks: <span id="clicks">0</span>/10</p>
-    </div>
-
-    <div id="final-screen" class="hidden">
-        <h1 style="color: var(--primary)">🌸 Felicitări! 🌸</h1>
-        <div class="snur-anim"></div>
-        <p>Ai ajutat-o pe Dochia să urce muntele și ai eliberat primăvara!</p>
-        <div id="martisor-img" style="font-size: 100px;">🌸</div>
-        <p id="final-stats"></p>
-        <button onclick="location.reload()" style="padding: 10px 20px; border-radius: 20px; cursor:pointer;">Joacă din nou</button>
+        <button class="save-btn" onclick="saveImg()">SALVEAZĂ MĂRȚIȘORUL</button>
+        <button class="btn" onclick="location.reload()" style="border:none; text-align:center; padding-left:0; margin-top:10px; font-size: 0.8rem; color: #bbb;">Reluează călătoria</button>
     </div>
 </div>
 
 <script>
-    let currentStage = 1;
-    let clicks = 0;
-    let totalTime = 0;
-    let timer = setInterval(() => totalTime++, 1000);
-
-    const stages = {
-        1: { title: "Cojocul de Gheață", instr: "Sparge gheața!", emoji: "🧊", target: 10 },
-        2: { title: "Cojocul de Vânt", instr: "Suflă vântul (apasă rapid)!", emoji: "🌬️", target: 12 },
-        3: { title: "Cojocul de Nor", instr: "Alungă norii de zăpadă!", emoji: "☁️", target: 8 },
-        4: { title: "Cojocul de Apă", instr: "Pornește pârâul!", emoji: "💧", target: 15 },
-        5: { title: "Cojocul de Pământ", instr: "Trezeste pământul!", emoji: "⛰️", target: 10 },
-        6: { title: "Cojocul de Mugur", instr: "Ajută mugurii să crească!", emoji: "🌿", target: 12 },
-        7: { title: "Cojocul de Pasăre", instr: "Cheamă rândunelele!", emoji: "🐦", target: 10 },
-        8: { title: "Cojocul de Soare", instr: "Încălzește muntele!", emoji: "☀️", target: 20 },
-        9: { title: "Cojocul de Flori", instr: "Fă florile să înflorească!", emoji: "🌷", target: 10 }
-    };
-
-    function handleAction() {
-        const icon = document.getElementById('main-emoji');
-        icon.classList.add('shake');
-        setTimeout(() => icon.classList.remove('shake'), 200);
-
-        clicks++;
-        document.getElementById('clicks').innerText = clicks;
-
-        if (clicks >= stages[currentStage].target) {
-            nextStage();
-        }
+    function goTo(step) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('step-' + step).classList.add('active');
     }
 
-    function nextStage() {
-        currentStage++;
-        clicks = 0;
+    function finish(type) {
+        const symbol = document.getElementById('final-symbol');
+        const title = document.getElementById('res-title');
+        const text = document.getElementById('res-text');
 
-        if (currentStage > 9) {
-            finishGame();
-            return;
-        }
+        const data = {
+            'ghiocel': { s: '🌱', t: 'Ghiocelul Speranței', d: 'Ai lăsat cojoacele iernii pentru a răsări cu puritate și forță.' },
+            'buburuza': { s: '🐞', t: 'Buburuza Veselă', d: 'Primăvara ta va fi plină de noroc și mici momente de extaz.' },
+            'potcoava': { s: '🐎', t: 'Potcoava de Noroc', d: 'După urcarea muntelui, meriți protecție și belșug în tot ce faci.' }
+        };
 
-        // Update UI
-        const s = stages[currentStage];
-        document.getElementById('stage-title').innerText = `Cojocul ${currentStage}: ${s.title}`;
-        document.getElementById('instruction').innerText = s.instr;
-        document.getElementById('main-emoji').innerText = s.emoji;
-        document.getElementById('clicks').innerText = "0";
-        document.getElementById('counter-label').innerHTML = `Clicks: <span id="clicks">0</span>/${s.target}`;
+        symbol.innerText = data[type].s;
+        title.innerText = data[type].t;
+        text.innerText = data[type].d;
         
-        // Progress bar
-        document.getElementById('progress-fill').style.width = ((currentStage-1) / 9 * 100) + "%";
-        
-        // Background warming
-        document.body.style.background = `hsl(${180 + (currentStage * 10)}, 70%, 85%)`;
+        goTo('final');
     }
 
-    function finishGame() {
-        clearInterval(timer);
-        document.getElementById('ui-top').classList.add('hidden');
-        document.getElementById('stage-content').classList.add('hidden');
-        document.getElementById('final-screen').classList.remove('hidden');
-        document.getElementById('final-stats').innerText = `Timp total: ${totalTime} secunde.`;
-        document.body.style.background = "#fff9c4";
-        
-        // Efect de confetti simplu
-        for(let i=0; i<30; i++) {
-            createPetal();
-        }
-    }
-
-    function createPetal() {
-        const p = document.createElement('div');
-        p.innerText = "🌸";
-        p.style.position = "fixed";
-        p.style.left = Math.random() * 100 + "vw";
-        p.style.top = "-20px";
-        p.style.fontSize = Math.random() * 20 + 10 + "px";
-        p.style.transition = `top ${Math.random() * 3 + 2}s linear`;
-        document.body.appendChild(p);
-        setTimeout(() => p.style.top = "110vh", 10);
+    function saveImg() {
+        const area = document.getElementById('capture-area');
+        html2canvas(area).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'martisor-artmera-2026.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
     }
 </script>
 
