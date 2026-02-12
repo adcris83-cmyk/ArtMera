@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Legenda Dochiei - Artmera Edition</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Georgia', serif; }
+
+        /* FUNDALUL JOCULUI */
+        #game-world {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: url('fundal.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* COJOACELE POZIȚIONATE PE POTECĂ */
+        .cojoc {
+            position: absolute;
+            width: 120px; /* Modifică dimensiunea în funcție de imagine */
+            cursor: pointer;
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+
+        .cojoc:hover { transform: scale(1.1) rotate(5deg); }
+
+        /* EFECT DE DISPARIȚIE (TOPIRE) */
+        .melt {
+            opacity: 0;
+            transform: scale(1.5) translateY(-50px);
+            pointer-events: none;
+        }
+
+        /* PANOU INFO */
+        #info-panel {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 100;
+        }
+
+        /* ECRAN FINAL */
+        #final-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 2s forwards;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* PETALELE CARE CAD */
+        .petal {
+            position: fixed;
+            background-color: #ffb7c5; /* Roz pal */
+            border-radius: 150% 0 150% 0;
+            opacity: 0.7;
+            pointer-events: none;
+            z-index: 50;
+        }
+    </style>
+</head>
+<body>
+
+<div id="game-world">
+    <div id="info-panel">
+        <h2 id="title">Ajut-o pe Dochia să lepede cele 9 cojoace</h2>
+        <p id="counter">Cojoace rămase: 9</p>
+    </div>
+
+    <img src="cojoc1.png" class="cojoc" style="top: 70%; left: 20%;" onclick="nextStep(this)">
+    <img src="cojoc2.png" class="cojoc" style="top: 65%; left: 40%;" onclick="nextStep(this)">
+    <img src="cojoc3.png" class="cojoc" style="top: 60%; left: 60%;" onclick="nextStep(this)">
+    <img src="cojoc4.png" class="cojoc" style="top: 50%; left: 75%;" onclick="nextStep(this)">
+    <img src="cojoc5.png" class="cojoc" style="top: 40%; left: 55%;" onclick="nextStep(this)">
+    <img src="cojoc6.png" class="cojoc" style="top: 35%; left: 35%;" onclick="nextStep(this)">
+    <img src="cojoc7.png" class="cojoc" style="top: 25%; left: 20%;" onclick="nextStep(this)">
+    <img src="cojoc8.png" class="cojoc" style="top: 15%; left: 45%;" onclick="nextStep(this)">
+    <img src="cojoc9.png" class="cojoc" style="top: 10%; left: 65%;" onclick="nextStep(this)">
+
+    <div id="final-screen">
+        <img src="martisor.png" style="width: 250px;">
+        <h1>Primăvara a sosit cu drag!</h1>
+        <p>Ai urcat muntele și ai adus lumina.</p>
+        <button onclick="location.reload()">Începe din nou</button>
+    </div>
+</div>
+
+<script>
+    let count = 9;
+
+    function nextStep(element) {
+        element.classList.add('melt');
+        count--;
+        document.getElementById('counter').innerText = "Cojoace rămase: " + count;
+
+        if (count === 0) {
+            setTimeout(() => {
+                document.getElementById('final-screen').style.display = 'flex';
+                startFlowers();
+            }, 1000);
+        }
+    }
+
+    // Funcția pentru petalele care cad
+    function startFlowers() {
+        setInterval(() => {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.width = Math.random() * 15 + 10 + 'px';
+            petal.style.height = Math.random() * 15 + 10 + 'px';
+            petal.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+            document.body.appendChild(petal);
+            
+            setTimeout(() => petal.remove(), 5000);
+        }, 100);
+    }
+
+    // Adăugăm animația de cădere în JS pentru a fi dinamică
+    const style = document.createElement('style');
+    style.innerHTML = `
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+
+</body>
+</html>
