@@ -13,40 +13,46 @@
             margin: 0; padding: 0; height: 100%;
             font-family: 'Segoe UI', sans-serif;
             overflow: hidden;
-            background-color: #000;
+            background-color: #1a1a1a; /* Culoare de siguranță */
         }
 
-        /* Efectul de urcare: fundalul se mișcă de sus în jos */
+        /* Imaginea de fundal - Landscape */
         #mountain-path {
             position: fixed;
-            top: 0; left: 0;
+            top: 0; 
+            left: 0;
             width: 100%;
-            height: 150%; /* Mai înalt pentru a avea spațiu de mișcare */
-            background: url('landscape.png') no-repeat center top;
+            height: 200vh; /* Dublul înălțimii ecranului pentru a avea spațiu de urcat */
+            background-image: url('landscape.png');
+            background-repeat: no-repeat;
             background-size: cover;
+            background-position: center bottom; /* Începe de la baza imaginii */
             z-index: -1;
-            transition: transform 2s ease-in-out;
+            transition: transform 3s ease-in-out; /* Tranziție lină pentru urcare */
             filter: brightness(0.6);
         }
 
         #game-overlay {
             display: flex; align-items: center; justify-content: center;
             height: 100vh;
+            width: 100%;
+            position: relative;
+            z-index: 10;
         }
 
-        /* Container Transparent (Efect de sticlă) */
+        /* Containerul Transparent (Glassmorphism) */
         .container {
-            background: rgba(255, 255, 255, 0.15); /* Transparent */
-            backdrop-filter: blur(10px); /* Încețoșează fundalul din spate */
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             color: white;
             padding: 40px;
             border-radius: 30px;
-            max-width: 500px;
+            max-width: 450px;
             width: 85%;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         }
 
         #cojoc-display {
@@ -56,35 +62,32 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            /* Dacă pozele au fundal negru, mix-blend-mode le poate face "transparente" temporar */
+            /* Elimină fundalul negru al pozelor (dacă negrul e pur) */
             mix-blend-mode: screen; 
-            transition: all 0.6s ease;
+            transition: all 0.5s ease;
         }
-
-        h2 { text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
 
         button {
             display: block; width: 100%; margin: 12px 0; padding: 15px;
-            border: 1px solid rgba(255,255,255,0.5);
-            background: rgba(211, 47, 47, 0.8);
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(211, 47, 47, 0.85);
             color: white; font-weight: bold; font-size: 16px;
-            border-radius: 15px; cursor: pointer; transition: 0.3s;
+            border-radius: 12px; cursor: pointer; transition: 0.3s;
         }
 
         button:hover {
             background: var(--romanian-red);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: scale(1.03);
         }
 
         .progress-bar {
-            width: 100%; height: 6px; background: rgba(255,255,255,0.2);
+            width: 100%; height: 5px; background: rgba(255,255,255,0.2);
             border-radius: 3px; margin-bottom: 25px;
         }
 
         #progress-fill {
             width: 0%; height: 100%; background: var(--romanian-red);
-            box-shadow: 0 0 10px var(--romanian-red);
+            box-shadow: 0 0 15px var(--romanian-red);
             transition: width 0.6s ease;
         }
 
@@ -100,16 +103,16 @@
         <div class="progress-bar"><div id="progress-fill"></div></div>
         <div id="cojoc-display" style="background-image: url('cojoc1.png');"></div>
         <h2 id="story-title">Legenda Dochiei</h2>
-        <p id="question-text">Urcă muntele și leapădă cojoacele iernii.</p>
+        <p id="question-text">Ajut-o pe Dochia să urce muntele.</p>
         <div id="options">
-            <button onclick="nextStep()">Începe urcușul</button>
+            <button onclick="nextStep()">Începe aventura</button>
         </div>
     </div>
 
     <div class="container hidden" id="result-container">
         <h2>Primăvara a sosit!</h2>
         <p id="martisor-desc"></p>
-        <img src="Cojocul Tradițional.png" alt="Cojoc" style="width: 250px; mix-blend-mode: screen;">
+        <img src="cojoc_traditional.png" alt="Cojoc Final" style="width: 280px; mix-blend-mode: screen;">
         <button onclick="location.reload()">Reia drumul</button>
     </div>
 </div>
@@ -139,9 +142,11 @@
         }
 
         if (currentStep < questions.length) {
-            // Mișcăm imaginea de fundal în jos (creând efectul de urcare)
-            const moveY = (currentStep / 9) * 30; // coboară fundalul cu până la 30%
-            document.getElementById('mountain-path').style.transform = `translateY(${moveY}%)`;
+            // EFECTUL DE URCARE:
+            // Deplasăm imaginea de fundal în jos pe axa Y. 
+            // Fiindcă am pus-o la 200vh, avem mult spațiu să o coborâm.
+            const movePercentage = (currentStep / 9) * 40; // Coboară până la 40% din înălțimea sa
+            document.getElementById('mountain-path').style.transform = `translateY(${movePercentage}%)`;
             
             updateUI();
         } else {
@@ -167,7 +172,9 @@
     function showFinalResult() {
         document.getElementById('quiz-container').classList.add('hidden');
         document.getElementById('result-container').classList.remove('hidden');
-        document.getElementById('martisor-desc').innerText = "Ai ajuns în vârf! Mărțișorul tău este gata.";
+        document.getElementById('martisor-desc').innerText = "Vârful a fost atins! Dochia a lepădat toate cojoacele.";
+        // Muntele ajunge la punctul maxim de urcare
+        document.getElementById('mountain-path').style.transform = `translateY(50%)`;
     }
 </script>
 </body>
