@@ -11,62 +11,65 @@
 
         body, html {
             margin: 0; padding: 0; height: 100%;
-            font-family: 'Segoe UI', serif;
-            overflow: hidden; /* Împiedică scroll-ul pentru o experiență imersivă */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
         }
 
-        /* Fundalul cu poteca din Carpați */
+        /* Fundalul landscape.png */
         #mountain-path {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://googleusercontent.com/image_generation_content/10') no-repeat center center;
+            background: url('landscape.png') no-repeat center center;
             background-size: cover;
-            filter: brightness(0.8);
+            filter: brightness(0.7);
             z-index: -1;
-            transition: transform 2s ease-in-out;
+            transition: transform 3s ease-in-out;
         }
 
         #game-overlay {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            height: 100vh; background: rgba(0, 0, 0, 0.4);
+            height: 100vh; background: rgba(0, 0, 0, 0.3);
             color: white; text-align: center;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            color: #333; padding: 30px; border-radius: 20px;
-            max-width: 500px; width: 90%;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            border: 4px solid var(--romanian-red);
+            background: rgba(255, 255, 255, 0.98);
+            color: #222; padding: 40px; border-radius: 25px;
+            max-width: 450px; width: 85%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            border-bottom: 8px solid var(--romanian-red);
         }
 
-        /* Zona pentru cojocul vizual */
+        /* Cojoacele 1.png - 9.png */
         #cojoc-display {
-            width: 150px; height: 150px; margin: 0 auto 20px;
+            width: 220px; height: 220px; margin: 0 auto 20px;
             background-size: contain; background-repeat: no-repeat;
             background-position: center;
-            transition: all 0.5s ease;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
+        h2 { color: var(--romanian-red); margin-top: 0; }
+
         button {
-            display: block; width: 100%; margin: 10px 0; padding: 12px;
+            display: block; width: 100%; margin: 12px 0; padding: 15px;
             border: 2px solid var(--romanian-red); background: white;
-            color: var(--romanian-red); font-weight: bold;
-            border-radius: 25px; cursor: pointer; transition: 0.3s;
+            color: var(--romanian-red); font-weight: bold; font-size: 16px;
+            border-radius: 30px; cursor: pointer; transition: 0.3s;
         }
 
         button:hover {
             background: var(--romanian-red); color: white;
-            transform: scale(1.02);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.4);
         }
 
         .progress-bar {
-            width: 100%; height: 10px; background: #eee;
-            border-radius: 5px; margin-bottom: 20px; overflow: hidden;
+            width: 100%; height: 8px; background: #eee;
+            border-radius: 4px; margin-bottom: 25px;
         }
 
         #progress-fill {
-            width: 11%; height: 100%; background: var(--romanian-red);
-            transition: width 0.5s;
+            width: 0%; height: 100%; background: var(--romanian-red);
+            transition: width 0.6s ease;
         }
 
         .hidden { display: none; }
@@ -80,98 +83,97 @@
     <div class="container" id="quiz-container">
         <div class="progress-bar"><div id="progress-fill"></div></div>
         
-        <div id="cojoc-display"></div>
+        <div id="cojoc-display" style="background-image: url('cojoc1.png');"></div>
         
-        <h2 id="story-text">Legenda Dochiei</h2>
-        <p id="question-text">Ești gata să ușurezi povara iernii?</p>
+        <h2 id="story-title">Legenda Dochiei</h2>
+        <p id="question-text" style="font-size: 18px; line-height: 1.5;">Baba Dochia pornește urcușul. Ești gata să o ajuți să lepede cojoacele?</p>
         
         <div id="options">
-            <button onclick="startGame()">Începe urcușul</button>
+            <button onclick="nextStep()">Începe călătoria</button>
         </div>
     </div>
 
     <div class="container hidden" id="result-container">
-        <h2>Ai ajuns la destinație!</h2>
-        <p id="martisor-desc"></p>
-        <img id="final-cojoc" style="width: 200px; border-radius: 10px;">
+        <h2>Vârful a fost atins!</h2>
+        <p id="martisor-desc" style="font-size: 18px; font-weight: 500;"></p>
+        <img src="Cojocul Tradițional.png" alt="Cojoc Tradițional" style="width: 250px; margin: 20px 0;">
+        <p style="font-style: italic; color: #666;">Primăvara a învins iarna.</p>
         <button onclick="location.reload()">Reia Legenda</button>
     </div>
 </div>
 
 <script>
-    const cojoaceImgs = [
-        'https://googleusercontent.com/image_generation_content/11', // Gheață
-        'https://googleusercontent.com/image_generation_content/12', // Vânt
-        'https://googleusercontent.com/image_generation_content/13', // Lapoviță
-        'https://googleusercontent.com/image_generation_content/14', // Ploaie
-        'https://googleusercontent.com/image_generation_content/15', // Burniță
-        'https://googleusercontent.com/image_generation_content/21', // Soare
-        'https://googleusercontent.com/image_generation_content/22', // Ceață
-        'https://googleusercontent.com/image_generation_content/18', // Crivăț
-        'https://googleusercontent.com/image_generation_content/19'  // Ger
-    ];
-
     const questions = [
-        { q: "Primele raze topesc gheața. Ce alegi să lași în urmă?", a: ["Trecutul înghețat", "Incertitudinea", "Frica de eșec"] },
-        { q: "Vântul bate cu putere. Ce sentiment eliberezi?", a: ["Mânia", "Regretul", "Neliniștea"] },
-        { q: "Lapovița îți îngreunează pașii. Ce greutate arunci?", a: ["Amânarea", "Ego-ul", "Tristețea"] },
-        { q: "Ploaia măruntă spală poteca. Ce amintire cureți?", a: ["Invidia", "Singurătatea", "Eșecul"] },
-        { q: "Burnița ascunde orizontul. În ce ai încredere?", a: ["Instinct", "Răbdare", "Speranță"] },
-        { q: "Soarele apare printre nori. Ce putere primești?", a: ["Căldură", "Lumină", "Energie"] },
-        { q: "Negura se lasă peste vale. Ce lași în ceață?", a: ["Confuzia", "Grijile", "Trecutul"] },
-        { q: "Crivățul te încearcă. Ce virtute păstrezi?", a: ["Curajul", "Credința", "Tăria"] },
-        { q: "Gerul e ultima probă. Ce protejezi sub ultimul cojoc?", a: ["Iubirea", "Puritatea", "Viața"] }
+        { q: "Primul cojoc e de gheață. Ce alegi să lași în urmă?", a: ["Trecutul rigid", "Grijile reci", "Inima împietrită"] },
+        { q: "Al doilea cojoc e suflat de vânt. Ce eliberezi?", a: ["Neliniștea", "Vorbele goale", "Zbuciumul"] },
+        { q: "Al treilea cojoc e greu de lapoviță. Ce arunci?", a: ["Incertitudinea", "Povara amânării", "Tristețea"] },
+        { q: "Al patrulea cojoc e ud de ploaie. Ce cureți?", a: ["Regretul", "Eșecul", "Invidia"] },
+        { q: "Al cincilea cojoc e de burniță. În ce crezi?", a: ["Răbdare", "Instinct", "Speranță"] },
+        { q: "Al șaselea cojoc e de soare. Ce primești?", a: ["Căldură", "Lumină", "Energie"] },
+        { q: "Al șaptelea cojoc e de ceață. Ce lași în negură?", a: ["Confuzia", "Îndoiala", "Teama"] },
+        { q: "Al optulea cojoc e de crivăț. Ce păstrezi?", a: ["Tăria", "Curajul", "Credința"] },
+        { q: "Ultimul cojoc e de ger. Ce protejezi?", a: ["Puritatea", "Iubirea", "Viața"] }
     ];
 
     let currentStep = 0;
     let scores = { A: 0, B: 0, C: 0 };
 
-    function startGame() {
-        document.getElementById('cojoc-display').style.backgroundImage = `url(${cojoaceImgs[0]})`;
-        showQuestion();
-    }
-
-    function showQuestion() {
-        if (currentStep < questions.length) {
-            // Actualizăm vizual cojocul curent
-            document.getElementById('cojoc-display').style.backgroundImage = `url(${cojoaceImgs[currentStep]})`;
-            document.getElementById('progress-fill').style.width = ((currentStep + 1) / 9 * 100) + '%';
-            document.getElementById('question-text').innerText = questions[currentStep].q;
-            
-            // Zoom ușor pe fundal pentru a simula urcatul
-            document.getElementById('mountain-path').style.transform = `scale(${1 + currentStep * 0.05})`;
-
-            const optionsDiv = document.getElementById('options');
-            optionsDiv.innerHTML = '';
-            questions[currentStep].a.forEach((choice, i) => {
-                const btn = document.createElement('button');
-                btn.innerText = choice;
-                btn.onclick = () => {
-                    if(i===0) scores.A++; else if(i===1) scores.B++; else scores.C++;
-                    currentStep++;
-                    showResultOrNext();
-                };
-                optionsDiv.appendChild(btn);
-            });
+    function nextStep(choiceIndex) {
+        // Înregistrăm scorul dacă nu este prima apăsare (start)
+        if (choiceIndex !== undefined) {
+            if(choiceIndex === 0) scores.A++;
+            else if(choiceIndex === 1) scores.B++;
+            else scores.C++;
+            currentStep++;
         }
-    }
 
-    function showResultOrNext() {
         if (currentStep < questions.length) {
-            showQuestion();
+            updateUI();
         } else {
-            document.getElementById('quiz-container').classList.add('hidden');
-            const resultCont = document.getElementById('result-container');
-            resultCont.classList.remove('hidden');
-
-            let martisor = "";
-            if (scores.A > scores.B) martisor = "Mărțișorul 'Floare de Colț' (Puritate)";
-            else if (scores.B > scores.C) martisor = "Mărțișorul 'Trifoi' (Noroc)";
-            else martisor = "Mărțișorul 'Inimă' (Iubire)";
-
-            document.getElementById('martisor-desc').innerText = `Ai lepădat toate cele 9 cojoace. Pe cojocul tău tradițional am prins: ${martisor}`;
-            document.getElementById('final-cojoc').src = 'https://googleusercontent.com/image_generation_content/24';
+            showFinalResult();
         }
+    }
+
+    function updateUI() {
+        // Actualizăm imaginea cojocului: cojoc1.png, cojoc2.png...
+        const cojocImg = `cojoc${currentStep + 1}.png`;
+        const display = document.getElementById('cojoc-display');
+        display.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+            display.style.backgroundImage = `url('${cojocImg}')`;
+            display.style.transform = 'scale(1)';
+        }, 200);
+
+        // Actualizăm textul și progresul
+        document.getElementById('progress-fill').style.width = ((currentStep + 1) / 9 * 100) + '%';
+        document.getElementById('question-text').innerText = questions[currentStep].q;
+        document.getElementById('story-title').innerText = `Cojocul ${currentStep + 1}`;
+        
+        // Zoom pe fundal
+        document.getElementById('mountain-path').style.transform = `scale(${1 + currentStep * 0.05})`;
+
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+        questions[currentStep].a.forEach((choice, i) => {
+            const btn = document.createElement('button');
+            btn.innerText = choice;
+            btn.onclick = () => nextStep(i);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function showFinalResult() {
+        document.getElementById('quiz-container').classList.add('hidden');
+        document.getElementById('result-container').classList.remove('hidden');
+
+        let martisorTip = "";
+        if (scores.A >= scores.B && scores.A >= scores.C) martisorTip = "un Mărțișor Alb (Puritate)";
+        else if (scores.B >= scores.A && scores.B >= scores.C) martisorTip = "un Mărțișor Roșu (Energie și Viață)";
+        else martisorTip = "un Mărțișor Împletit (Echilibru și Destin)";
+
+        document.getElementById('martisor-desc').innerText = 
+            `Ai lepădat toate cele 9 cojoace pe munte. Dochia s-a transformat în stană de piatră, dar spiritul primăverii a rămas cu tine prin ${martisorTip} prins pe cojocul tău tradițional.`;
     }
 </script>
 </body>
