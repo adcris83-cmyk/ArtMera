@@ -61,8 +61,8 @@ body, html {
 .martisor-container { position: relative; width: 200px; height: 200px; margin: 0 auto 30px; display: flex; align-items: center; justify-content: center; }
         
 #martisor-img {
-    width: 95%;
-    height: 95%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     position: relative;
     border-radius:50%;
@@ -144,12 +144,19 @@ button:hover {
 
 .hidden { display: none; }
 
+/* Meniu Limbi */
+.lang-picker { position: absolute; top: 15px; right: 15px; display: flex; gap: 8px; }
+.lang-btn { background: none; border: 1px solid #eee; font-size: 0.7rem; cursor: pointer; padding: 4px 8px; transition: 0.3s; }
+.lang-btn.active { border-color: var(--art-red); color: var(--art-red); font-weight: bold; }
 
 
     </style>
 </head>
 <body>
-
+<div class="lang-picker">
+        <button class="lang-btn active" onclick="setLanguage('ro')">RO</button>
+        <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+</div>
 <div id="mountain-path"></div>
 
 <div id="game-overlay">
@@ -199,17 +206,33 @@ button:hover {
     //Fiecare element este un obiect cu două proprietăți:
     //q = textul întrebării
     //a = un array cu cele 3 variante de răspuns
-    const questions = [
-    { q: "Ce stare porți pe umeri astăzi?", a: ["Viforul jucăuș", "Liniștea de după ploaie", "Prima rază de soare"] },
-    { q: "Ce se ascunde în buzunarele tale?", a: ["Semințe de viitor", "Cioburi de gheață", "O rază de rezervă"] },
-    { q: "Ce vrei să aducă vântul de miazăzi?", a: ["Aromă de pământ reavăn", "O veste bună", "Un suflu de libertate"] },
-    { q: "Cum întâmpini ninsoarea de primăvară?", a: ["Cu un dans", "Cu un zâmbet complice", "Cu nerăbdare"] },
-    { q: "Ce sclipire alegi să oglindești?", a: ["Cristalele de ger", "Lumina crudă", "Aurul soarelui blând"] },
-    { q: "Ce forță nouă simți sub cojoc?", a: ["Puterea de a te reinventa", "Forța de a sparge gheața", "Curajul de a înflori"] },
-    { q: "Ce lași să treacă precum norii?", a: ["Gândul greu", "Monotonia", "Ezitarea"] },
-    { q: "Ce păstrezi viu, indiferent de vreme?", a: ["Focul lăuntric", "Curiozitatea", "Speranța verde"] },
-    { q: "Ce devii când se topește zăpada?", a: ["Culoare pură", "Lumină", "O nouă poveste"] }
-];
+    const questions = {
+    ro: [
+        { q: "Ce stare porți pe umeri astăzi?", a: ["Viforul jucăuș", "Liniștea de după ploaie", "Prima rază de soare"] },
+        { q: "Ce se ascunde în buzunarele tale?", a: ["Semințe de viitor", "Cioburi de gheață", "O rază de rezervă"] },
+        { q: "Ce vrei să aducă vântul de miazăzi?", a: ["Aromă de pământ reavăn", "O veste bună", "Un suflu de libertate"] },
+        { q: "Cum întâmpini ninsoarea de primăvară?", a: ["Cu un dans", "Cu un zâmbet complice", "Cu nerăbdare"] },
+        { q: "Ce sclipire alegi să oglindești?", a: ["Cristalele de ger", "Lumina crudă", "Aurul soarelui blând"] },
+        { q: "Ce forță nouă simți sub cojoc?", a: ["Puterea de a te reinventa", "Forța de a sparge gheața", "Curajul de a înflori"] },
+        { q: "Ce lași să treacă precum norii?", a: ["Gândul greu", "Monotonia", "Ezitarea"] },
+        { q: "Ce păstrezi viu, indiferent de vreme?", a: ["Focul lăuntric", "Curiozitatea", "Speranța verde"] },
+        { q: "Ce devii când se topește zăpada?", a: ["Culoare pură", "Lumină", "O nouă poveste"] }
+    ],
+
+    en: [
+        { q: "What feeling rests on your shoulders today?", a: ["A playful blizzard", "The calm after rain", "The first ray of sun"] },
+        { q: "What hides in your pockets?", a: ["Seeds of the future", "Shards of ice", "A spare ray of light"] },
+        { q: "What do you wish the southern wind to bring?", a: ["The scent of fresh earth", "A piece of good news", "A breath of freedom"] },
+        { q: "How do you greet the spring snowfall?", a: ["With a dance", "With a knowing smile", "With anticipation"] },
+        { q: "Which sparkle do you choose to reflect?", a: ["Frost crystals", "Raw light", "The gentle gold of the sun"] },
+        { q: "What new strength do you feel beneath your coat?", a: ["The power to reinvent yourself", "The force to break the ice", "The courage to bloom"] },
+        { q: "What do you let pass like drifting clouds?", a: ["The heavy thought", "Monotony", "Hesitation"] },
+        { q: "What do you keep alive, no matter the weather?", a: ["The inner fire", "Curiosity", "The green hope"] },
+        { q: "What do you become when the snow melts?", a: ["Pure color", "Light", "A new story"] }
+    ]
+};
+
+    let currentLang = 'ro';
 
     //currentStep reține numărul întrebării curente (începe de la 0).
     //scores ține scorul pentru cele trei tipuri de răspunsuri:
@@ -232,7 +255,8 @@ button:hover {
         //Dacă mai sunt întrebări → actualizezi interfața.
         //Dacă ai ajuns la final → afișezi rezultatul.
         
-        if (currentStep < questions.length) {
+       if (currentStep < questions[currentLang].length
+        {
             updateUI();//actualizare interfata
         } else {
             showFinalResult();
@@ -261,7 +285,7 @@ button:hover {
 
         //Schimbi întrebarea afișată.
         //Schimbi titlul poveștii (Cojocul 1, Cojocul 2…).
-        document.getElementById('question-text').innerText = questions[currentStep].q;
+        document.getElementById('question-text').innerText = questions[currentLang][currentStep].q;
         document.getElementById('story-title').innerText = `Cojocul ${currentStep + 1}`;
         
         // Zoom pe fundal
@@ -275,7 +299,7 @@ button:hover {
         //Îi setezi textul.
         //Îi setezi acțiunea la click → trece la următoarea întrebare.
         //Îl adaugi în pagină.
-        questions[currentStep].a.forEach((choice, i) => {
+        questions[currentLang][currentStep].a.forEach((choice, i) => {
             const btn = document.createElement('button');
             btn.innerText = choice;
             btn.onclick = () => nextStep(i);
@@ -312,6 +336,29 @@ button:hover {
 
         document.getElementById('martisor-desc').innerText = 
             `Ai lepădat toate cele 9 cojoace pe munte. Dochia s-a transformat în stană de piatră, dar spiritul primăverii a rămas cu tine prin ${martisorTip}.`;
+    }
+
+    function saveImg() {
+        const area = document.getElementById('capture-area');
+        html2canvas(area).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'martisor-artmera.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+    }
+
+    let currentLang = 'ro';
+    let userPath = "";
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if (i18n[lang][key]) el.innerText = i18n[lang][key];
+        });
     }
 </script>
 </body>
