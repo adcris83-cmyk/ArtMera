@@ -303,10 +303,9 @@ button:hover {
         
         //Dacă mai sunt întrebări → actualizezi interfața.
         //Dacă ai ajuns la final → afișezi rezultatul.
-        
-       if (currentStep < questions[currentLang].length)
-        {
-            updateUI();//actualizare interfata
+
+        if (currentStep < questions[currentLang].length) {
+            updateUI();
         } else {
             showFinalResult();
         }
