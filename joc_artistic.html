@@ -59,18 +59,28 @@ body, html {
 }
 
 .martisor-container { position: relative; width: 200px; height: 200px; margin: 0 auto 30px; display: flex; align-items: center; justify-content: center; }
+        
 #martisor-img {
-    width: 80%;   /* ajustezi după gust */
+    width: 80%;
     height: 80%;
     object-fit: contain;
-    z-index: 2;
+    position: relative;
+    z-index: 1; /* Imaginea este sub cerc */
 }
         
 /* Șnurul de mărțișor (Elementul constant) */
-.snur-frame { position: absolute; width: 100%; height: 100%; border: 6px solid transparent; 
-             border-top-color: var(--art-red); border-bottom-color: #eee; 
-             border-radius: 50%;/*cerc*/
-             animation: rotatia 20s linear infinite; }
+.snur-frame {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 6px solid transparent;
+    border-top-color: var(--art-red);
+    border-bottom-color: #eee;
+    border-radius: 50%;/*cerc*/
+    animation: rotate 20s linear infinite;
+    z-index: 5; /* Cercul este deasupra imaginii */
+}
+
 .snur-frame::after { content: '∞'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); color: var(--art-red); font-size: 20px; }
 .watermark { font-size: 11px; color: #ccc; margin-top: 25px; letter-spacing: 2px; text-transform: uppercase; }
 .save-btn { background: var(--art-red); color: white; border: none; padding: 16px; width: 100%; cursor: pointer;
