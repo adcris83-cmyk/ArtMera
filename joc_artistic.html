@@ -38,12 +38,14 @@ body, html {
     position: fixed;
     top: 0; left: 0;
     width: 100%;
-    height: 140vh; /* mai înalt decât ecranul */
+    height: 300vh; /* mai înalt decât ecranul */
     background: url('landscape.png') no-repeat center bottom;
     background-size: cover;
     z-index: 1;
     transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1);
     filter: brightness(0.7);
+    background-position: center bottom;
+
 }
 
 /* OVERLAY - Stratul de deasupra muntelui */
@@ -360,7 +362,7 @@ button:hover {
         //Mărești treptat fundalul pentru efect cinematic.
         //document.getElementById('mountain-path').style.transform = `scale(${1 + currentStep * 0.05})`;
         document.getElementById('mountain-path').style.transform =
-    `translateY(${currentStep * 80}px)`;
+    `translateY(${currentStep * 20}px)`;
 
         const optionsDiv = document.getElementById('options');
         optionsDiv.innerHTML = '';
