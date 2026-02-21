@@ -188,23 +188,22 @@ button:hover {
     </div>
 
     <div class="container hidden"  id="result-container">
+          <h2 data-key="summit_title">Vârful a fost atins!</h2>
         <div id="capture-area">
-            <h2 data-key="summit_title">Vârful a fost atins!</h2>
-
-            <div class="martisor-container">
+             <div class="martisor-container">
                 <div class="snur-frame"></div>
-                     <img id="martisor-img" src="cojoc_traditional.png" alt="Cojoc Tradițional" style="width: 250px; margin: 20px 0;">
-                          
+                     <img id="martisor-img" src="cojoc_traditional.png" alt="Cojoc Tradițional" style="width: 250px; margin: 20px 0;">  
+                 <p id="martisor-desc" style="font-size: 18px; font-weight: 500; color: #fff;"></p>
+
             </div>
             <h3 id="res-title" style="color:var(--art-dark); margin-bottom: 10px;"></h3>
             <p id="res-text" style="font-size: 0.9rem; color: #666; font-style: italic; padding: 0 20px;"></p>
 
             <p style="font-style: italic; color: #fff;" data-key="spring_won">Primăvara a învins iarna.</p>
-            <button onclick="location.reload()" data-key="restart">Reia Legenda</button>
             <div class="watermark">artmera.wordpress.com</div>
         </div>
-        <button class="save-btn" onclick="saveImg()" data-key="save_btn">SALVEAZĂ MĂRȚIȘORUL</button>
-
+         <button class="save-btn" onclick="saveImg()" data-key="save_btn">SALVEAZĂ MĂRȚIȘORUL</button>
+         <button onclick="location.reload()" data-key="restart">Reia Legenda</button>
         <br>
         <a href="https://artmera.wordpress.com" target="_blank" class="header-brand" 
             style="text-decoration: none; display: block; margin-top: 20px;" data-key="visit">Revenire la Artmera</a>
@@ -263,8 +262,12 @@ button:hover {
         // Salvare
         save_btn: "SALVEAZĂ MĂRȚIȘORUL",
         visit: "Revenire la Artmera",
-        final_text: "Ai lepădat toate cele 9 cojoace pe munte. Dochia s-a transformat în stană de piatră, dar spiritul primăverii a rămas cu tine prin "
-    },
+        
+        final_text: "Ai lepădat toate cele 9 cojoace pe munte. Dochia s-a transformat în stană de piatră, dar spiritul primăverii a rămas cu tine prin ",
+        tip_A: "un Mărțișor Puritate",
+        tip_B: "un Mărțișor Energie și Viață",
+        tip_C: "un Mărțișor Echilibru"
+        },
 
     en: {
         // Language menu
@@ -285,6 +288,9 @@ button:hover {
         save_btn: "SAVE THE MĂRȚIȘOR",
         visit: "Return to Artmera",
         final_text: "You have shed all 9 coats on the mountain. Dochia turned into stone, but the spirit of spring stayed with you through "
+        tip_A: "a Purity Mărțișor",
+        tip_B: "an Energy & Life Mărțișor",
+        tip_C: "a Balance Mărțișor"
     }
 };
 
@@ -368,9 +374,10 @@ button:hover {
 
         //Compari scorurile. Alegi mărțișorul dominant.
         let martisorTip = "";
-        if (scores.A >= scores.B && scores.A >= scores.C) martisorTip = "un Mărțișor Puritate";
-        else if (scores.B >= scores.A && scores.B >= scores.C) martisorTip = "un Mărțișor Energie și Viață";
-        else martisorTip = "un Mărțișor Echilibru";
+
+        if (scores.A >= scores.B && scores.A >= scores.C) martisorTip = i18n[currentLang].tip_A;
+        else if (scores.B >= scores.A && scores.B >= scores.C) martisorTip = i18n[currentLang].tip_B;
+        else martisorTip = i18n[currentLang].tip_C;
 
         const img = document.getElementById('martisor-img');
 
