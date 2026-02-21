@@ -159,8 +159,8 @@ button:hover {
 </head>
 <body>
 <div class="lang-picker">
-        <button class="lang-btn active" onclick="setLanguage('ro')">RO</button>
-        <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+    <button class="lang-btn active" onclick="setLanguage('ro')" data-key="lang_ro">RO</button>
+    <button class="lang-btn" onclick="setLanguage('en')" data-key="lang_en">EN</button>
 </div>
 <div id="mountain-path"></div>
 
@@ -170,17 +170,21 @@ button:hover {
         
         <div id="cojoc-display" style="background-image: url('cojoc1.png');"></div>
         
-        <h2 id="story-title">Legenda Dochiei</h2>
-        <p id="question-text" style="font-size: 18px; line-height: 1.5;">Baba Dochia pornește urcușul. Ești gata să o ajuți să lepede cojoacele?</p>
+        <h2 id="story-title" data-key="intro_title">Legenda Dochiei</h2>
+
+        <p id="question-text" style="font-size: 18px; line-height: 1.5;" data-key="intro_text">Baba Dochia pornește urcușul...</p>
+
         
         <div id="options">
-            <button onclick="nextStep()">Începe călătoria</button>
+            <button onclick="nextStep()" data-key="start_btn">Începe călătoria</button>
+
         </div>
     </div>
 
     <div class="container hidden"  id="result-container">
         <div id="capture-area">
-            <h2>Vârful a fost atins!</h2>
+            <h2 data-key="summit_title">Vârful a fost atins!</h2>
+
             <div class="martisor-container">
                 <div class="snur-frame"></div>
                      <img id="martisor-img" src="cojoc_traditional.png" alt="Cojoc Tradițional" style="width: 250px; margin: 20px 0;">
@@ -189,19 +193,16 @@ button:hover {
             <h3 id="res-title" style="color:var(--art-dark); margin-bottom: 10px;"></h3>
             <p id="res-text" style="font-size: 0.9rem; color: #666; font-style: italic; padding: 0 20px;"></p>
 
-                                                                                                                                                                                    <p id="martisor-desc" style="font-size: 18px; font-weight: 500;"></p>
-           
-            
-            <p style="font-style: italic; color: #555;">Primăvara a învins iarna.</p>
-            <button onclick="location.reload()">Reia Legenda</button>
-
+            <p style="font-style: italic; color: #555;" data-key="spring_won">Primăvara a învins iarna.</p>
+            <button onclick="location.reload()" data-key="restart">Reia Legenda</button>
             <div class="watermark">artmera.wordpress.com</div>
         </div>
-
-        
         <button class="save-btn" onclick="saveImg()" data-key="save_btn">SALVEAZĂ MĂRȚIȘORUL</button>
+
         <br>
-        <a href="https://artmera.wordpress.com" target="_blank" class="header-brand" style="text-decoration: none; display: block; margin-top: 20px;" data-key="visit">Revenire la Artmera</a>
+        <a href="https://artmera.wordpress.com" target="_blank" class="header-brand" 
+            style="text-decoration: none; display: block; margin-top: 20px;" data-key="visit">Revenire la Artmera</a>
+
     </div>
 
    </div>
@@ -236,6 +237,49 @@ button:hover {
         { q: "What do you become when the snow melts?", a: ["Pure color", "Light", "A new story"] }
     ]
 };
+
+    const i18n = {
+    ro: {
+        // Meniu limbi
+        lang_ro: "RO",
+        lang_en: "EN",
+
+        // Intro
+        intro_title: "Legenda Dochiei",
+        intro_text: "Baba Dochia pornește urcușul. Ești gata să o ajuți să lepede cojoacele?",
+        start_btn: "Începe călătoria",
+
+        // Rezultat
+        summit_title: "Vârful a fost atins!",
+        spring_won: "Primăvara a învins iarna.",
+        restart: "Reia Legenda",
+
+        // Salvare
+        save_btn: "SALVEAZĂ MĂRȚIȘORUL",
+        visit: "Revenire la Artmera"
+    },
+
+    en: {
+        // Language menu
+        lang_ro: "RO",
+        lang_en: "EN",
+
+        // Intro
+        intro_title: "The Legend of Dochia",
+        intro_text: "Old Dochia begins her climb. Are you ready to help her shed the coats?",
+        start_btn: "Begin the journey",
+
+        // Result
+        summit_title: "The peak has been reached!",
+        spring_won: "Spring has defeated winter.",
+        restart: "Restart the Legend",
+
+        // Save
+        save_btn: "SAVE THE MĂRȚIȘOR",
+        visit: "Return to Artmera"
+    }
+};
+
 
     let currentLang = 'ro';
 
