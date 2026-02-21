@@ -145,7 +145,12 @@ button:hover {
 .hidden { display: none; }
 
 /* Meniu Limbi */
-.lang-picker { position: absolute; top: 15px; right: 15px; display: flex; gap: 8px; }
+.lang-picker { position: absolute;
+              top: 15px;
+              right: 15px;
+              display: flex; 
+              gap: 8px; 
+              z-index: 100;}
 .lang-btn { background: none; border: 1px solid #eee; font-size: 0.7rem; cursor: pointer; padding: 4px 8px; transition: 0.3s; }
 .lang-btn.active { border-color: var(--art-red); color: var(--art-red); font-weight: bold; }
 
