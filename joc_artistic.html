@@ -347,7 +347,9 @@ button:hover {
         
         // Zoom pe fundal
         //Mărești treptat fundalul pentru efect cinematic.
-        document.getElementById('mountain-path').style.transform = `scale(${1 + currentStep * 0.05})`;
+        //document.getElementById('mountain-path').style.transform = `scale(${1 + currentStep * 0.05})`;
+        document.getElementById('mountain-path').style.transform =
+    `translateY(-${currentStep * 80}px)`;
 
         const optionsDiv = document.getElementById('options');
         optionsDiv.innerHTML = '';
