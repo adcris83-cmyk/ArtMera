@@ -280,9 +280,7 @@ button:hover {
     }
 };
 
-
     let currentLang = 'ro';
-
     //currentStep reține numărul întrebării curente (începe de la 0).
     //scores ține scorul pentru cele trei tipuri de răspunsuri:
     //A = primul răspuns
@@ -395,10 +393,6 @@ button:hover {
             link.click();
         });
     }
-
-    let currentLang = 'ro';
-    let userPath = "";
-
     function setLanguage(lang) {
         currentLang = lang;
         document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
