@@ -6,7 +6,9 @@
     <title>Legenda Dochiei - Drumul pe Munte</title>
     <style>
       :root {
-    --romanian-red: #d32f2f;
+          --romanian-red: #d32f2f;
+          --art-red: #d62828;
+          --art-dark: #2b2d42;
 }
 
 body, html {
@@ -58,18 +60,22 @@ body, html {
 
 .martisor-container { position: relative; width: 200px; height: 200px; margin: 0 auto 30px; display: flex; align-items: center; justify-content: center; }
         
-        /* Șnurul de mărțișor (Elementul constant) */
-        .snur-frame { position: absolute; width: 100%; height: 100%; border: 6px solid transparent; border-top-color: var(--art-red); border-bottom-color: #eee; border-radius: 50%; animation: rotate 20s linear infinite; }
-        .snur-frame::after { content: '∞'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); color: var(--art-red); font-size: 20px; }
+/* Șnurul de mărțișor (Elementul constant) */
+.snur-frame { position: absolute; width: 100%; height: 100%; border: 6px solid transparent; 
+             border-top-color: var(--art-red); border-bottom-color: #eee; 
+             border-radius: 50%;/*cerc*/
+             animation: rotate 20s linear infinite; }
+.snur-frame::after { content: '∞'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); color: var(--art-red); font-size: 20px; }
 
-        .symbol-display { font-size: 5rem; z-index: 2; }
-        .symbol-svg { width: 100px; height: 100px; fill: var(--art-red); }
+.symbol-display { font-size: 5rem; z-index: 2; }
+.symbol-svg { width: 100px; height: 100px; fill: var(--art-red); }
 
-        .watermark { font-size: 11px; color: #ccc; margin-top: 25px; letter-spacing: 2px; text-transform: uppercase; }
-        .save-btn { background: var(--art-red); color: white; border: none; padding: 16px; width: 100%; cursor: pointer; font-weight: bold; margin-top: 20px; letter-spacing: 1px; }
+.watermark { font-size: 11px; color: #ccc; margin-top: 25px; letter-spacing: 2px; text-transform: uppercase; }
+.save-btn { background: var(--art-red); color: white; border: none; padding: 16px; width: 100%; cursor: pointer;
+           font-weight: bold; margin-top: 20px; letter-spacing: 1px; }
 
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 
 /* IMAGINILE COJOACELOR (cojoc1.png...9.png) */
@@ -152,21 +158,21 @@ button:hover {
         <div id="capture-area">
             <h2>Vârful a fost atins!</h2>
             <div class="martisor-container">
-                <div class="snur-frame"></div>
-               
+                <div class="snur-frame"></div>               
             </div>
             <h3 id="res-title" style="color:var(--art-dark); margin-bottom: 10px;"></h3>
             <p id="res-text" style="font-size: 0.9rem; color: #666; font-style: italic; padding: 0 20px;"></p>
 
                                                                                                                                                                                     <p id="martisor-desc" style="font-size: 18px; font-weight: 500;"></p>
-            <img id="martisor-img" src="cojoc_traditional.png" alt="Cojoc Tradițional" 
-         style="width: 250px; margin: 20px 0;">
+            <img id="martisor-img" src="cojoc_traditional.png" alt="Cojoc Tradițional" style="width: 250px; margin: 20px 0;">
             
             <p style="font-style: italic; color: #555;">Primăvara a învins iarna.</p>
             <button onclick="location.reload()">Reia Legenda</button>
 
             <div class="watermark">artmera.wordpress.com</div>
         </div>
+
+        
         <button class="save-btn" onclick="saveImg()" data-key="save_btn">SALVEAZĂ MĂRȚIȘORUL</button>
         <br>
         <a href="https://artmera.wordpress.com" target="_blank" class="header-brand" style="text-decoration: none; display: block; margin-top: 20px;" data-key="visit">Revenire la Artmera</a>
