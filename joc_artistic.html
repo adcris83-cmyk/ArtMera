@@ -109,6 +109,25 @@ button:hover {
 }
 
 .hidden { display: none; }
+
+
+/* Zona Mărțișor Generat */
+#capture-area { padding: 40px 20px; background: white; border: 1px solid #f9f9f9; border-radius: 8px; }
+        .martisor-container { position: relative; width: 200px; height: 200px; margin: 0 auto 30px; display: flex; align-items: center; justify-content: center; }
+        
+        /* Șnurul de mărțișor (Elementul constant) */
+        .snur-frame { position: absolute; width: 100%; height: 100%; border: 6px solid transparent; border-top-color: var(--art-red); border-bottom-color: #eee; border-radius: 50%; animation: rotate 20s linear infinite; }
+        .snur-frame::after { content: '∞'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); color: var(--art-red); font-size: 20px; }
+
+        .symbol-display { font-size: 5rem; z-index: 2; }
+        .symbol-svg { width: 100px; height: 100px; fill: var(--art-red); }
+
+        .watermark { font-size: 11px; color: #ccc; margin-top: 25px; letter-spacing: 2px; text-transform: uppercase; }
+        .save-btn { background: var(--art-red); color: white; border: none; padding: 16px; width: 100%; cursor: pointer; font-weight: bold; margin-top: 20px; letter-spacing: 1px; }
+
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
     </style>
 </head>
 <body>
@@ -129,16 +148,41 @@ button:hover {
         </div>
     </div>
 
-    <div class="container hidden" id="result-container">
-        <h2>Vârful a fost atins!</h2>
-        <p id="martisor-desc" style="font-size: 18px; font-weight: 500;"></p>
-        <img src="cojoc_traditional.png" alt="Cojoc Tradițional" style="width: 250px; margin: 20px 0;">
-        <p style="font-style: italic; color: #666;">Primăvara a învins iarna.</p>
-        <button onclick="location.reload()">Reia Legenda</button>
+    <div class="screen" id="result-container">
+        <div id="capture-area">
+            <h2>Vârful a fost atins!</h2>
+            <div class="martisor-container">
+                <div class="snur-frame"></div>
+               
+            </div>
+            <h3 id="res-title" style="color:var(--art-dark); margin-bottom: 10px;"></h3>
+            <p id="res-text" style="font-size: 0.9rem; color: #666; font-style: italic; padding: 0 20px;"></p>
+
+                                                                                                                                                                                    <p id="martisor-desc" style="font-size: 18px; font-weight: 500;"></p>
+            <img id="martisor-img" src="cojoc_traditional.png" alt="Cojoc Tradițional" 
+         style="width: 250px; margin: 20px 0;">
+            
+            <p style="font-style: italic; color: #555;">Primăvara a învins iarna.</p>
+            <button onclick="location.reload()">Reia Legenda</button>
+
+            <div class="watermark">artmera.wordpress.com</div>
+        </div>
+        <button class="save-btn" onclick="saveImg()" data-key="save_btn">SALVEAZĂ MĂRȚIȘORUL</button>
+        <br>
+        <a href="https://artmera.wordpress.com" target="_blank" class="header-brand" style="text-decoration: none; display: block; margin-top: 20px;" data-key="visit">Revenire la Artmera</a>
+    </div>
+
+    <div class="container hidden" >
+        
+        
     </div>
 </div>
 
 <script>
+    //Creezi un array numit questions.
+    //Fiecare element este un obiect cu două proprietăți:
+    //q = textul întrebării
+    //a = un array cu cele 3 variante de răspuns
     const questions = [
     { q: "Ce stare porți pe umeri astăzi?", a: ["Viforul jucăuș", "Liniștea de după ploaie", "Prima rază de soare"] },
     { q: "Ce se ascunde în buzunarele tale?", a: ["Semințe de viitor", "Cioburi de gheață", "O rază de rezervă"] },
@@ -151,20 +195,29 @@ button:hover {
     { q: "Ce devii când se topește zăpada?", a: ["Culoare pură", "Lumină", "O nouă poveste"] }
 ];
 
+    //currentStep reține numărul întrebării curente (începe de la 0).
+    //scores ține scorul pentru cele trei tipuri de răspunsuri:
+    //A = primul răspuns
+    //B = al doilea
+    //C = al treilea
     let currentStep = 0;
     let scores = { A: 0, B: 0, C: 0 };
-
+    
+    //Funcția este apelată când utilizatorul apasă un buton de răspuns.
     function nextStep(choiceIndex) {
         // Înregistrăm scorul dacă nu este prima apăsare (start)
         if (choiceIndex !== undefined) {
             if(choiceIndex === 0) scores.A++;
             else if(choiceIndex === 1) scores.B++;
             else scores.C++;
-            currentStep++;
+            currentStep++;//Treci la următoarea întrebare (currentStep++).
         }
-
+        
+        //Dacă mai sunt întrebări → actualizezi interfața.
+        //Dacă ai ajuns la final → afișezi rezultatul.
+        
         if (currentStep < questions.length) {
-            updateUI();
+            updateUI();//actualizare interfata
         } else {
             showFinalResult();
         }
@@ -172,25 +225,40 @@ button:hover {
 
     function updateUI() {
         // Actualizăm imaginea cojocului: cojoc1.png, cojoc2.png...
+        
         const cojocImg = `cojoc${currentStep + 1}.png`;
         const display = document.getElementById('cojoc-display');
-        display.style.transform = 'scale(0.8)';
-        
+        display.style.transform = 'scale(0.8)';//Micșorezi imaginea pentru efect vizual.
+
+        //După 200 ms:
+        //Schimbi imaginea.
+        //O readuci la dimensiunea normală → efect de zoom.
         setTimeout(() => {
             display.style.backgroundImage = `url('${cojocImg}')`;
             display.style.transform = 'scale(1)';
         }, 200);
 
         // Actualizăm textul și progresul
+        //Calculezi procentul în funcție de întrebarea curentă.
+        //Setezi lățimea barei.
         document.getElementById('progress-fill').style.width = ((currentStep + 1) / 9 * 100) + '%';
+
+        //Schimbi întrebarea afișată.
+        //Schimbi titlul poveștii (Cojocul 1, Cojocul 2…).
         document.getElementById('question-text').innerText = questions[currentStep].q;
         document.getElementById('story-title').innerText = `Cojocul ${currentStep + 1}`;
         
         // Zoom pe fundal
+        //Mărești treptat fundalul pentru efect cinematic.
         document.getElementById('mountain-path').style.transform = `scale(${1 + currentStep * 0.05})`;
 
         const optionsDiv = document.getElementById('options');
         optionsDiv.innerHTML = '';
+        //Pentru fiecare răspuns:
+        //Creezi un buton.
+        //Îi setezi textul.
+        //Îi setezi acțiunea la click → trece la următoarea întrebare.
+        //Îl adaugi în pagină.
         questions[currentStep].a.forEach((choice, i) => {
             const btn = document.createElement('button');
             btn.innerText = choice;
@@ -200,13 +268,31 @@ button:hover {
     }
 
     function showFinalResult() {
+        //Ascunzi quiz-ul și arăți rezultatul
         document.getElementById('quiz-container').classList.add('hidden');
         document.getElementById('result-container').classList.remove('hidden');
 
+        //Compari scorurile. Alegi mărțișorul dominant.
         let martisorTip = "";
-        if (scores.A >= scores.B && scores.A >= scores.C) martisorTip = "un Mărțișor Alb (Puritate)";
-        else if (scores.B >= scores.A && scores.B >= scores.C) martisorTip = "un Mărțișor Roșu (Energie și Viață)";
-        else martisorTip = "un Mărțișor Împletit (Echilibru și Destin)";
+        if (scores.A >= scores.B && scores.A >= scores.C) martisorTip = "un Mărțișor Puritate";
+        else if (scores.B >= scores.A && scores.B >= scores.C) martisorTip = "un Mărțișor Energie și Viață";
+        else martisorTip = "un Mărțișor Echilibru";
+
+        const img = document.getElementById('martisor-img');
+
+        if (scores.A >= scores.B && scores.A >= scores.C) {
+            img.src = "martisor_alb.png";        // imagine pentru Mărțișor Alb
+            img.alt = "Mărțișor Alb";
+        }
+        else if (scores.B >= scores.A && scores.B >= scores.C) {
+            img.src = "martisor_rosu.png";       // imagine pentru Mărțișor Roșu
+            img.alt = "Mărțișor Roșu";
+        }
+        else {
+            img.src = "martisor_impletit.png";   // imagine pentru Mărțișor Împletit
+            img.alt = "Mărțișor Împletit";
+        }
+
 
         document.getElementById('martisor-desc').innerText = 
             `Ai lepădat toate cele 9 cojoace pe munte. Dochia s-a transformat în stană de piatră, dar spiritul primăverii a rămas cu tine prin ${martisorTip} prins pe cojocul tău tradițional.`;
