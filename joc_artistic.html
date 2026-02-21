@@ -68,7 +68,11 @@ body, html {
     border-radius:50%;
     z-index: 1; /* Imaginea este sub cerc */
 }
-        
+
+#martisor-desc {
+    color: #fff;
+}
+
 /* Șnurul de mărțișor (Elementul constant) */
 .snur-frame {
     position: absolute;
@@ -193,7 +197,7 @@ button:hover {
             <h3 id="res-title" style="color:var(--art-dark); margin-bottom: 10px;"></h3>
             <p id="res-text" style="font-size: 0.9rem; color: #666; font-style: italic; padding: 0 20px;"></p>
 
-            <p style="font-style: italic; color: #555;" data-key="spring_won">Primăvara a învins iarna.</p>
+            <p style="font-style: italic; color: #fff;" data-key="spring_won">Primăvara a învins iarna.</p>
             <button onclick="location.reload()" data-key="restart">Reia Legenda</button>
             <div class="watermark">artmera.wordpress.com</div>
         </div>
@@ -256,7 +260,8 @@ button:hover {
 
         // Salvare
         save_btn: "SALVEAZĂ MĂRȚIȘORUL",
-        visit: "Revenire la Artmera"
+        visit: "Revenire la Artmera",
+        final_text: "Ai lepădat toate cele 9 cojoace pe munte. Dochia s-a transformat în stană de piatră, dar spiritul primăverii a rămas cu tine prin "
     },
 
     en: {
@@ -276,7 +281,8 @@ button:hover {
 
         // Save
         save_btn: "SAVE THE MĂRȚIȘOR",
-        visit: "Return to Artmera"
+        visit: "Return to Artmera",
+        final_text: "You have shed all 9 coats on the mountain. Dochia turned into stone, but the spirit of spring stayed with you through "
     }
 };
 
@@ -378,10 +384,7 @@ button:hover {
             img.src = "martisor_c.png";   // imagine pentru Mărțișor Împletit
             img.alt = "Mărțișor Împletit";
         }
-
-
-        document.getElementById('martisor-desc').innerText = 
-            `Ai lepădat toate cele 9 cojoace pe munte. Dochia s-a transformat în stană de piatră, dar spiritul primăverii a rămas cu tine prin ${martisorTip}.`;
+        document.getElementById('martisor-desc').innerText =    i18n[currentLang].final_text + martisorTip + ".";
     }
 
     function saveImg() {
